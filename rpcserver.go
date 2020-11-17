@@ -858,11 +858,11 @@ func handleEstimateFee(s *rpcServer, cmd interface{}, closeNotifier <-chan bool)
 		return nil, errors.New("Fee estimation disabled")
 	}
 
-	if c.NumBlocks <= 0 {
+	/*if c.NumBlocks <= 0 {
 		return -1.0, errors.New("Parameter NumBlocks must be positive")
-	}
+	}*/
 
-	feeRate, err := s.cfg.FeeEstimator.EstimateFee(uint32(c.NumBlocks))
+	feeRate, err := s.cfg.FeeEstimator.EstimateFee()
 
 	if err != nil {
 		return -1.0, err

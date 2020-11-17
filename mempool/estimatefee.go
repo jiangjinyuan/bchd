@@ -556,7 +556,7 @@ func (ef *FeeEstimator) EstimateFee(numBlocks uint32) (BchPerKilobyte, error) {
 		return -1, errors.New("not enough blocks have been observed")
 	}
 
-	if numBlocks == 0 {
+	/*if numBlocks == 0 {
 		return -1, errors.New("cannot confirm transaction in zero blocks")
 	}
 
@@ -564,14 +564,14 @@ func (ef *FeeEstimator) EstimateFee(numBlocks uint32) (BchPerKilobyte, error) {
 		return -1, fmt.Errorf(
 			"can only estimate fees for up to %d blocks from now",
 			estimateFeeBinSize)
-	}
+	}*/
 
 	// If there are no cached results, generate them.
 	if ef.cached == nil {
 		ef.cached = ef.estimates()
 	}
 
-	return ef.cached[int(numBlocks)-1].ToBchPerKb(), nil
+	return ef.cached[0].ToBchPerKb(), nil
 }
 
 // In case the format for the serialized version of the FeeEstimator changes,
