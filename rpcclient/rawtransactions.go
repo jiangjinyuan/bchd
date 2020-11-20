@@ -287,7 +287,7 @@ func (r FutureSendRawTransactionResult) Receive() (*chainhash.Hash, error) {
 // the returned instance.
 //
 // See SendRawTransaction for the blocking version and more details.
-func (c *Client) SendRawTransactionAsync(tx *wire.MsgTx, txHex string, allowHighFees bool) FutureSendRawTransactionResult {
+func (c *Client) SendRawTransactionAsync(tx *wire.MsgTx, txHex string, maxFeeRate float64) FutureSendRawTransactionResult {
 	if tx != nil {
 		// Serialize the transaction and convert to hex string.
 		buf := bytes.NewBuffer(make([]byte, 0, tx.SerializeSize()))
@@ -299,20 +299,20 @@ func (c *Client) SendRawTransactionAsync(tx *wire.MsgTx, txHex string, allowHigh
 		return newFutureError(errors.New("no transaction data provided, both msgTx and txHex are empty"))
 	}
 
-	cmd := btcjson.NewSendRawTransactionCmd(txHex, &allowHighFees)
+	cmd := btcjson.NewSendRawTransactionCmd(txHex, &maxFeeRate)
 	return c.sendCmd(cmd)
 }
 
 // SendRawTransaction submits the encoded transaction to the server which will
 // then relay it to the network.
-func (c *Client) SendRawTransaction(tx *wire.MsgTx, allowHighFees bool) (*chainhash.Hash, error) {
-	return c.SendRawTransactionAsync(tx, "", allowHighFees).Receive()
+func (c *Client) SendRawTransaction(tx *wire.MsgTx, maxFeeRate float64) (*chainhash.Hash, error) {
+	return c.SendRawTransactionAsync(tx, "", maxFeeRate).Receive()
 }
 
 // SendRawSerializedTransaction submits the pre-serialized transaction to the server which will
 // then relay it to the network.
-func (c *Client) SendRawSerializedTransaction(txHex string, allowHighFees bool) (*chainhash.Hash, error) {
-	return c.SendRawTransactionAsync(nil, txHex, allowHighFees).Receive()
+func (c *Client) SendRawSerializedTransaction(txHex string, maxFeeRate float64) (*chainhash.Hash, error) {
+	return c.SendRawTransactionAsync(nil, txHex, maxFeeRate).Receive()
 }
 
 // FutureSignRawTransactionResult is a future promise to deliver the result

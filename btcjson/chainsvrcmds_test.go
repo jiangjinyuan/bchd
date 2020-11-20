@@ -1013,8 +1013,8 @@ func TestChainSvrCmds(t *testing.T) {
 			},
 			marshalled: `{"jsonrpc":"1.0","method":"sendrawtransaction","params":["1122"],"id":1}`,
 			unmarshalled: &btcjson.SendRawTransactionCmd{
-				HexTx:         "1122",
-				AllowHighFees: btcjson.Bool(false),
+				HexTx:      "1122",
+				MaxFeeRate: btcjson.Float64(0.1),
 			},
 		},
 		{
@@ -1023,12 +1023,12 @@ func TestChainSvrCmds(t *testing.T) {
 				return btcjson.NewCmd("sendrawtransaction", "1122", false)
 			},
 			staticCmd: func() interface{} {
-				return btcjson.NewSendRawTransactionCmd("1122", btcjson.Bool(false))
+				return btcjson.NewSendRawTransactionCmd("1122", btcjson.Float64(0.1))
 			},
 			marshalled: `{"jsonrpc":"1.0","method":"sendrawtransaction","params":["1122",false],"id":1}`,
 			unmarshalled: &btcjson.SendRawTransactionCmd{
-				HexTx:         "1122",
-				AllowHighFees: btcjson.Bool(false),
+				HexTx:      "1122",
+				MaxFeeRate: btcjson.Float64(0.1),
 			},
 		},
 		{

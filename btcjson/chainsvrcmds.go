@@ -677,8 +677,8 @@ func NewSearchRawTransactionsCmd(address string, verbose *VerboseLevel, skip, co
 
 // SendRawTransactionCmd defines the sendrawtransaction JSON-RPC command.
 type SendRawTransactionCmd struct {
-	HexTx         string
-	AllowHighFees *bool `jsonrpcdefault:"false"`
+	HexTx      string
+	MaxFeeRate *float64 `jsonrpcdefault:"0.1"`
 }
 
 // NewSendRawTransactionCmd returns a new instance which can be used to issue a
@@ -686,10 +686,10 @@ type SendRawTransactionCmd struct {
 //
 // The parameters which are pointers indicate they are optional.  Passing nil
 // for optional parameters will use the default value.
-func NewSendRawTransactionCmd(hexTx string, allowHighFees *bool) *SendRawTransactionCmd {
+func NewSendRawTransactionCmd(hexTx string, maxFeeRate *float64) *SendRawTransactionCmd {
 	return &SendRawTransactionCmd{
-		HexTx:         hexTx,
-		AllowHighFees: allowHighFees,
+		HexTx:      hexTx,
+		MaxFeeRate: maxFeeRate,
 	}
 }
 

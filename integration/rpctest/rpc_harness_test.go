@@ -220,7 +220,7 @@ func testJoinMempools(r *Harness, t *testing.T) {
 	if err != nil {
 		t.Fatalf("coinbase spend failed: %v", err)
 	}
-	if _, err := r.Node.SendRawTransaction(testTx, true); err != nil {
+	if _, err := r.Node.SendRawTransaction(testTx, 0.1); err != nil {
 		t.Fatalf("send transaction failed: %v", err)
 	}
 
@@ -272,7 +272,7 @@ func testJoinMempools(r *Harness, t *testing.T) {
 
 	// Send the transaction to the local harness which will result in synced
 	// mempools.
-	if _, err := harness.Node.SendRawTransaction(testTx, true); err != nil {
+	if _, err := harness.Node.SendRawTransaction(testTx, 0.1); err != nil {
 		t.Fatalf("send transaction failed: %v", err)
 	}
 
